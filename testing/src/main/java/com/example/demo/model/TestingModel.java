@@ -6,6 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "studentProfile")
 public class TestingModel {
 
+	public TestingModel(String name, int id) {
+		super();
+		this.name = name;
+		this.id = id;
+	}
 	private String name;
     private int  id;
 

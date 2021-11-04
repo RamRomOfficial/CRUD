@@ -29,6 +29,11 @@ public class TestingService {
 	
 	public String addTest(TestingModel testModel)
 	{
+		if(testModel.getName().length()==0)
+		{
+			throw new ExceptionClass("Name field is Empty");
+		}
+			
 		TestingModel insertedTest=mongoTemplate.insert(testModel);
 		System.out.println("Inserted");
 		return " Inserted";
