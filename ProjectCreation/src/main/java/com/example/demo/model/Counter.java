@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.demo.resource.ProjectResource;
 
-@Document(collection = ProjectResource.COUNTER_DOCUMENT)
+@Document(collection = ProjectResource.COUNTER_COLLECION)
 public class Counter {
 
 	@Id

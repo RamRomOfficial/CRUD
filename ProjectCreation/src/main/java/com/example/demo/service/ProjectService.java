@@ -15,6 +15,7 @@ import com.example.demo.model.Counter;
 import com.example.demo.model.ProjectModel;
 import com.example.demo.model.RequirementModel;
 import com.example.demo.resource.ProjectResource;
+import com.example.demo.utilites.ProjectUtility;
 
 @Service
 public class ProjectService {
@@ -25,7 +26,7 @@ private MongoTemplate mongoTemplate;
 
 	@Autowired
 	public ProjectService(MongoTemplate mongoTemplate) {
-		System.out.println("service class is created");
+		
 		this.mongoTemplate = mongoTemplate;
 	}
 	
@@ -47,9 +48,8 @@ private MongoTemplate mongoTemplate;
 		return   mongoTemplate.findAll(ProjectModel.class);
 	}
 	public ProjectModel getByProjectId(String id) {
-		Query query = new Query();
-		query.addCriteria(Criteria.where("id").is(id));
-		return mongoTemplate.findOne(query, ProjectModel.class);
+	
+		return mongoTemplate.findOne(ProjectUtility.getQueryByKeyValue("id", id), ProjectModel.class);
 	}
 	
 	public String updateProject(ProjectModel projectModel,String id) {
@@ -86,12 +86,12 @@ private MongoTemplate mongoTemplate;
 	
 	public Counter uniqueValue(String key)
 	{
-		 Query query = new Query(Criteria.where("_id").is(key));	
+		 
 		 Update update = new Update();
 		  update.inc(ProjectResource.COUNTER_DOCUMENT_SEQUENCE_COLUMN, 1);
 		  FindAndModifyOptions options = new FindAndModifyOptions();
 		  options.returnNew(true).upsert(true);
-		  Counter counter= mongoOperation.findAndModify(query, update, options, Counter.class);
+		  Counter counter= mongoOperation.findAndModify(ProjectUtility.getQueryByKeyValue("_id", key), update, options, Counter.class);
 		  counter.addRequirementCount();
 		  
 		  mongoTemplate.save(counter);
@@ -119,8 +119,7 @@ private MongoTemplate mongoTemplate;
 		
 		ProjectModel projectModel=getByProjectId(id);
 		
-		 Query query = new Query(Criteria.where("_id").is(ProjectResource.COUNTER_DOCUMENT_ID));
-		 Counter counter=mongoTemplate.findOne(query, Counter.class);
+		 Counter counter=mongoTemplate.findOne(ProjectUtility.getQueryByKeyValue("_id", ProjectResource.COUNTER_DOCUMENT_ID), Counter.class);
 		 int requirementCounterIndex=Integer.valueOf(id.substring(4));
 		 int value=counter.getRequirementCounter().get(requirementCounterIndex-1);
 		 value+=1;

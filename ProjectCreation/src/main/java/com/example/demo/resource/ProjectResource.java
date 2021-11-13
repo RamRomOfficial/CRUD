@@ -1,8 +1,9 @@
 package com.example.demo.resource;
 
 public class ProjectResource {
-  public static final String COUNTER_DOCUMENT="counter";	
-  public static final String PROJECT_DOCUMENT="project";
+	
+  public static final String COUNTER_COLLECION="counter";	
+  public static final String PROJECT_COLLECION="project";
   
 	
   public static final String COUNTER_DOCUMENT_ID="projectId";

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.example.demo.resource.ProjectResource;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Document(collection = ProjectResource.PROJECT_DOCUMENT)
+@Document(collection = ProjectResource.PROJECT_COLLECION)
 public class ProjectModel {
 	private String id;
 	private String name;
